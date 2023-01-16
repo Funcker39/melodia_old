@@ -1,0 +1,140 @@
+{
+    "types": [
+        "drill",
+        "trap"
+    ],
+    "beatmakers": [
+        {
+            "name": "Ysos Beats",
+            "id": "UCuMLGUTSGqVNMgYuRPw7jJQ",
+            "types": [
+                {
+                    "name": "drill",
+                    "quantity": 20,
+                    "keywords": [
+                        "drill"
+                    ]
+                },
+                {
+                    "name": "trap",
+                    "quantity": 200,
+                    "keywords": []
+                }
+            ],
+            "rappers": [
+                {
+                    "name": "Ninho",
+                    "quantity": 100
+                },
+                {
+                    "name": "PLK",
+                    "quantity": 70
+                },
+                {
+                    "name": "SCH",
+                    "quantity": 50
+                },
+                {
+                    "name": "Damso",
+                    "quantity": 60
+                },
+                {
+                    "name": "Nekfeu",
+                    "quantity": 50
+                },
+                {
+                    "name": "Maes",
+                    "quantity": 70
+                },
+                {
+                    "name": "Hamza",
+                    "quantity": 30
+                },
+                {
+                    "name": "Laylow",
+                    "quantity": 15
+                },
+                {
+                    "name": "Niska",
+                    "quantity": 15
+                },
+                {
+                    "name": "Vald",
+                    "quantity": 40
+                }
+            ]
+        },
+        {
+            "name": "Traplysse",
+            "id": "UCe9qjVPRSSvVfY5F2DSVY0A",
+            "types": [
+                {
+                    "name": "drill",
+                    "quantity": 20,
+                    "keywords": [
+                        "drill"
+                    ]
+                },
+                {
+                    "name": "trap",
+                    "quantity": 5,
+                    "keywords": []
+                }
+            ],
+            "rappers": [
+                {
+                    "name": "Ninho",
+                    "quantity": 130
+                },
+                {
+                    "name": "FreezeCorleone",
+                    "quantity": 80
+                },
+                {
+                    "name": "Dinos",
+                    "quantity": 50
+                },
+                {
+                    "name": "Laylow",
+                    "quantity": 30
+                },
+                {
+                    "name": "Hamza",
+                    "quantity": 70
+                },
+                {
+                    "name": "Oboy",
+                    "quantity": 30
+                },
+                {
+                    "name": "Leto",
+                    "quantity": 150
+                },
+                {
+                    "name": "13Block",
+                    "quantity": 130
+                },
+                {
+                    "name": "KobaLaD",
+                    "quantity": 60
+                },
+                {
+                    "name": "Zola",
+                    "quantity": 100
+                },
+                {
+                    "name": "Gazo",
+                    "quantity": 30
+                },
+                {
+                    "name": "SCH",
+                    "quantity": 50
+                },
+                {
+                    "name": "Damso",
+                    "quantity": 50
+                }
+            ]
+        }
+    ]
+}

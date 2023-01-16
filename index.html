@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Audio Streamer</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background-color: rgb(56, 56, 56);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .typeButton {
+            position: relative;
+            left: 40%;
+            width: 20%;
+            height: 30px;
+        }
+
+        /* Style buttons */
+        .iconBtn {
+            background-color: transparent;
+            /* Blue background */
+            border: none;
+            /* Remove borders */
+            color: white;
+            /* White text */
+            /* Some padding */
+            font-size: 36px;
+            /* Set a font size */
+            cursor: pointer;
+            /* Mouse pointer on hover */
+            margin-left: 2%;
+            margin-right: 2%;
+        }
+
+        /* Darker background on mouse-over */
+        .iconBtn:hover {
+            color: rgb(131, 131, 131);
+        }
+
+        .iconBtn:active {
+            color: rgb(87, 87, 87);
+        }
+
+        textarea,
+        h3 {
+            position: relative;
+            left: 40%;
+            width: 20%;
+            height: 30px;
+        }
+
+        .footer {
+            text-align: center;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: white;
+            background: linear-gradient(0deg, rgba(30,30,30,1) 0%, rgba(30,30,30,0.8) 80%, rgba(30,30,30,0) 100%); 
+        }
+
+        #beatTitle {
+            color: white;
+            text-decoration: none;
+        }
+
+        #beatTitle p {
+            margin-top: 32px;
+            margin-bottom: 2px;
+            font-size: large;
+        }
+
+        #channelTitle {
+            margin-top: 2px;
+            margin-bottom: 4px;
+            font-size: medium;
+            color: darkgray;
+        }
+        
+
+        #volumeSlider {
+            width: 10%;
+            height: 15px;
+
+            background-color: transparent;
+            margin-top: 6px;
+            border-radius: 24px;
+        }
+
+        /*Chrome*/
+        @media screen and (-webkit-min-device-pixel-ratio:0) {
+            input[type='range'] {
+                overflow: hidden;
+                width: 80px;
+                -webkit-appearance: none;
+                background-color: #9a905d;
+            }
+
+            input[type='range']::-webkit-slider-runnable-track {
+                height: 10px;
+                -webkit-appearance: none;
+                color: #13bba4;
+                margin-top: -1px;
+            }
+
+            input[type='range']::-webkit-slider-thumb {
+                width: 10px;
+                -webkit-appearance: none;
+                height: 10px;
+                cursor: ew-resize;
+                background: #434343;
+                box-shadow: -80px 0 0 80px #43e5f7;
+            }
+
+        }
+
+        /** FF*/
+        input[type="range"]::-moz-range-progress {
+            background-color: #ffffff;
+        }
+
+        input[type="range"]::-moz-range-track {
+            background-color: #585858;
+        }
+
+        /* IE*/
+        input[type="range"]::-ms-fill-lower {
+            background-color: #43e5f7;
+        }
+
+        input[type="range"]::-ms-fill-upper {
+            background-color: #9a905d;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <br>
+    <button onclick="getBeat('old-school')" class="typeButton">Old School</button>
+    <br>
+    <button onclick="getBeat('drill')" class="typeButton">Drill</button>
+    <br>
+    <button onclick="getBeat('melodic')" class="typeButton">Melodic</button>
+    <br>
+    <input type="text" id="customType">
+    <button onclick="getBeat(document.getElementById('customType').value)">Rechercher</button>
+    <br>
+
+    <div class="footer">
+        <a id="beatTitle">
+            <p>-</p>
+        </a>
+        
+        <p id="channelTitle">-</p>
+
+
+        <button onclick="" class="iconBtn" id="prevButton"><i class="fa fa-chevron-circle-left"></i></button>
+        <button onclick="skipBackward()" class="iconBtn" id="nextButton"><i
+                class="fa fa-angle-double-left"></i></button>
+        <button onclick="playPauseSong()" class="iconBtn" id="playButton"><i class="fa fa-play-circle"></i></button>
+        <button onclick="skipForward()" class="iconBtn" id="skipForwardButton"><i
+                class="fa fa-angle-double-right"></i></button>
+        <button onclick="getBeat(lastBeatType)" class="iconBtn" id="nextButton"><i
+                class="fa fa-chevron-circle-right"></i></button>
+
+
+        <div>
+            <i class="fa fa-volume-off"></i>
+            <input id="volumeSlider" type="range" min="0" max="100" value="50" onchange="changeVolume(value)">
+        </div>
+    </div>
+
+    <audio id='audioPlayer' type="audio/mpeg" autoplay hidden onplay="changePlayState(true)"
+        onpause="changePlayState(false)"></audio>
+
+    <script>
+        var lastBeatType = ''
+        var playing = false
+
+        function changePlayState(playState) {
+            playing = playState
+            document.getElementById('playButton').innerHTML = playing ? '<i class="fa fa-pause-circle">' : '<i class="fa fa-play-circle">'
+        }
+
+        function changeVolume(volume) {
+            let player = document.getElementById('audioPlayer');
+            player.volume = volume / 100;
+        }
+
+        function skipSong() {
+            getBeat(lastBeatType)
+        }
+
+        function playPauseSong() {
+            if (lastBeatType === '') {
+                getBeat('instru')
+            }
+
+            let player = document.getElementById('audioPlayer');
+            if (playing) {
+                player.pause();
+            }
+            else {
+                player.play();
+            }
+            changePlayState(playing)
+        }
+
+        function stopSong() {
+            let player = document.getElementById('audioPlayer');
+            player.pause();
+            player.currentTime = 0;
+        }
+
+        function skipForward() {
+            let player = document.getElementById('audioPlayer');
+            player.currentTime += 10.0;
+        }
+
+        function skipBackward() {
+            let player = document.getElementById('audioPlayer');
+            player.currentTime -= 10.0;
+        }
+
+        function getBeat(type) {
+            lastBeatType = type
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', `/beat?type=${type}`);
+
+            xhr.send()
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+
+                    data = JSON.parse(xhr.responseText)
+                    console.log(data)
+
+                    document.getElementById('audioPlayer').src = `/audio?videoId=${data.id}`
+                    document.getElementById('beatTitle').innerHTML = 
+                    `<a href="${data.link}" target="_blank" id="beatTitle"> <p>${data.title}</p> </a>`
+                    // document.getElementById('beatTitle').innerHTML = `<p id="beatTitle">${data.title}</p>`
+                    document.getElementById('channelTitle').innerHTML = data.channelTitle
+
+                } else if (xhr.status === 404) {
+                    console.log("No records found")
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
